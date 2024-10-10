@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.lib_main.ui.fragment.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main" >
+
+        <action
+            android:id="@+id/action_main_to_poetry"
+            app:destination="@id/poetryFragment" />
+
+        <action
+            android:id="@+id/action_main_to_animation"
+            app:destination="@id/attributeAnimationFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/action_main_to_mp_chart"
+            app:destination="@id/mpChartFragment" />
+
+        <action
+            android:id="@+id/action_main_to_search"
+            app:destination="@id/searchFragment" />
+
+        <action
+            android:id="@+id/action_main_to_web"
+            app:destination="@id/webFragment" />
+
+        <action
+            android:id="@+id/action_main_to_note"
+            app:destination="@id/noteListFragment" />
+
+        <action
+            android:id="@+id/action_main_to_device"
+            app:destination="@id/deviceInfoFragment" />
+
+        <action
+            android:id="@+id/action_main_to_camera"
+            app:destination="@id/cameraXFragment" />
+
+        <action
+            android:id="@+id/action_main_to_radio_controlled_meter"
+            app:destination="@id/radioControlledMeterFragment" />
+
+        <action
+            android:id="@+id/action_main_to_project_compose"
+            app:destination="@id/projectsComposeFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/poetryFragment"
+        android:name="com.example.lib_main.ui.fragment.PoetryFragment"
+        android:label="poetryFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/attributeAnimationFragment"
+        android:name="com.example.lib_main.ui.fragment.AttributeAnimationFragment"
+        android:label="attributeAnimation">
+    </fragment>
+
+    <fragment
+        android:id="@+id/mpChartFragment"
+        android:name="com.example.lib_main.ui.fragment.MPChartFragment"
+        android:label="mpChartFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.lib_main.ui.fragment.SearchFragment"
+        android:label="searchFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/webFragment"
+        android:name="com.example.lib_base.web.WebFragment"
+        android:label="webFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/noteListFragment"
+        android:name="com.example.lib_main.ui.fragment.NoteListFragment"
+        android:label="noteListFragment">
+
+        <action
+            android:id="@+id/action_note_to_detail"
+            app:destination="@id/noteDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/noteDetailFragment"
+        android:name="com.example.lib_main.ui.fragment.NoteDetailFragment"
+        android:label="noteDetailFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/deviceInfoFragment"
+        android:name="com.example.lib_main.ui.fragment.DeviceInfoFragment"
+        android:label="deviceInfoFragment">
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/cameraXFragment"
+        android:name="com.example.lib_main.ui.fragment.CameraXFragment"
+        android:label="cameraXFragment">
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/projectsComposeFragment"
+        android:name="com.example.lib_main.ui.fragment.ProjectsMainCompose"
+        android:label="projectsComposeFragment">
+    </fragment>
+
+    <fragment
+        android:id="@+id/radioControlledMeterFragment"
+        android:name="com.example.lib_main.ui.fragment.RadioControlledMeterFragment"
+        android:label="radioControlledMeterFragment">
+    </fragment>
+
+</navigation>

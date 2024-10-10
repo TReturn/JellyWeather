@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="OverScrollLayout">
+        <attr name="canOverScroll" format="boolean" />
+        <attr name="animDuration" format="integer" />
+        <attr name="overScrollSize" format="integer" />
+        <attr name="overScrollStateChangeSize" format="integer" />
+        <attr name="damping" format="float" />
+        <attr name="textDamping" format="float" />
+        <attr name="overScrollText" format="string" />
+        <attr name="overScrollChangeText" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="textColor" format="reference|color" />
+        <attr name="overScrollColor" format="reference|color" />
+    </declare-styleable>
+
+    <!--values/attrs.xml-->
+    <declare-styleable name="FixDragLayout">
+        <attr name="android:orientation" />
+    </declare-styleable>
+
+    <!--自定义属性-->
+    <declare-styleable name="VerticalTextView">
+        <attr name="textVertical" format="string" />
+        <attr name="textSizeVertical" format="dimension" />
+        <attr name="textColorVertical" format="color" />
+        <attr name="inputType" format="enum">
+            <enum name="text" value="1"/>
+            <enum name="number" value="2"/>
+        </attr>
+        <attr name="orientation" format="enum">
+            <!-- Defines an horizontal widget. -->
+            <enum name="horizontal" value="0" />
+            <!-- Defines a vertical widget. -->
+            <enum name="vertical" value="1" />
+        </attr>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,68 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlinx-serialization'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.android.minSdkVersion
+        targetSdkVersion rootProject.android.targetSdkVersion
+        versionCode rootProject.android.versionCode
+        versionName rootProject.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        buildFeatures {
+            dataBinding = true
+            viewBinding = true
+            compose true
+        }
+
+        composeOptions {
+            kotlinCompilerExtensionVersion '1.5.1'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    //官方基础库
+    testImplementation rootProject.depsLibs.junit
+    androidTestImplementation rootProject.depsLibs.junitTest
+    androidTestImplementation rootProject.depsLibs.espressoCore
+
+    //本地库
+    implementation project(path: ':lib_base')
+
+    //第三方库
+    implementation rootProject.depsLibs.xbanner
+    implementation rootProject.depsLibs.magicindicator
+    implementation rootProject.depsLibs.permissionx
+    implementation rootProject.depsLibs.qrcode
+    implementation rootProject.depsLibs.labelsview
+    implementation rootProject.depsLibs.lottie
+    implementation rootProject.depsLibs.circleimageview
+    implementation rootProject.depsLibs.mpandroidchart
+
+}

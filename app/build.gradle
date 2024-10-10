@@ -1,0 +1,133 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        applicationId rootProject.android.applicationId
+        minSdkVersion rootProject.android.minSdkVersion
+        targetSdkVersion rootProject.android.targetSdkVersion
+        versionCode rootProject.android.versionCode
+        versionName rootProject.android.versionName
+        multiDexEnabled rootProject.android.multiDexEnabled
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86_64", "x86"
+        }
+
+        buildFeatures {
+            dataBinding = true
+            compose true
+        }
+
+        composeOptions {
+            kotlinCompilerExtensionVersion '1.5.1'
+        }
+
+    }
+
+    buildTypes {
+        debug {
+            // 调试模式开关
+            debuggable true
+            jniDebuggable true
+            // 压缩对齐开关
+            zipAlignEnabled false
+            // 移除无用的资源
+            shrinkResources false
+            // 代码混淆开关
+            minifyEnabled false
+        }
+        release {
+            // 调试模式开关
+            debuggable false
+            jniDebuggable false
+            // 压缩对齐开关
+            zipAlignEnabled true
+            // 移除无用的资源
+            shrinkResources true
+            // 代码混淆开关
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packagingOptions {
+        // 剔除这个包下的所有文件（不会移除签名信息）
+        exclude 'META-INF/*******'
+    }
+
+    applicationVariants.all { variant ->
+
+        // Apk 输出文件名配置
+        variant.outputs.all { output ->
+            outputFileName = rootProject.getName() + '_v' + variant.versionName + '_' + variant.buildType.name
+            if (variant.buildType.name == buildTypes.release.getName()) {
+                outputFileName += '_' + new Date().format('MMdd')
+            }
+            outputFileName += '.apk'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    // 签名配置
+    signingConfigs {
+        release {
+            try {
+                storeFile file("./jellyweather.keystore")
+                storePassword "zyt2024"
+                keyAlias "key"
+                keyPassword "zyt2024"
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+
+        debug {
+            try {
+                storeFile file("./jellyweather.keystore")
+                storePassword "zyt2024"
+                keyAlias "key"
+                keyPassword "zyt2024"
+            } catch (ex) {
+                throw new InvalidUserDataException(ex.toString())
+            }
+        }
+    }
+
+}
+
+dependencies {
+
+    //官方基础库
+    testImplementation rootProject.depsLibs.junit
+    androidTestImplementation rootProject.depsLibs.junitTest
+    androidTestImplementation rootProject.depsLibs.espressoCore
+
+    //本地库
+    implementation project(path: ':lib_base')
+    implementation project(path: ':lib_main')
+
+    // 插件升级后出现kotlin-stdlib-jdk版本冲突在这里解决
+    //implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
+    //第三方库
+    implementation rootProject.depsLibs.lottie
+    implementation rootProject.depsLibs.activity_crash
+
+}

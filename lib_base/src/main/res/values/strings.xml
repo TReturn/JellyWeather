@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">果冻天气</string>
+
+    <!--崩溃相关-->
+    <string name="error_tips">Error</string>
+    <string name="restart_app">Restart APP</string>
+    <string name="see_error_info">See Log</string>
+    <string name="error_info">Log</string>
+    <string name="error_copy">Copy</string>
+    <string name="error_close">Close</string>
+    <string name="error_copy_success">Copy Success</string>
+</resources>

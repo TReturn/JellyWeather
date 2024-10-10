@@ -1,0 +1,125 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlinx-serialization'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.android.minSdkVersion
+        targetSdkVersion rootProject.android.targetSdkVersion
+        versionCode rootProject.android.versionCode
+        versionName rootProject.android.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        buildFeatures {
+            dataBinding = true
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+}
+
+dependencies {
+
+    //官方基础库
+    api rootProject.depsLibs.coreKtx
+    api rootProject.depsLibs.appcompat
+    api rootProject.depsLibs.material
+    api rootProject.depsLibs.constraintlayout
+    testImplementation rootProject.depsLibs.junit
+    androidTestImplementation rootProject.depsLibs.junitTest
+    androidTestImplementation rootProject.depsLibs.espressoCore
+    androidTestImplementation rootProject.depsLibs.compose_ui_test
+
+    //官方拓展库
+    api rootProject.depsLibs.recyclerview
+    api(rootProject.depsLibs.viewpager2, {
+        exclude module: 'recyclerview'
+    })
+    api rootProject.depsLibs.coroutines_core
+    api rootProject.depsLibs.coroutines_android
+    api rootProject.depsLibs.lifecycle
+
+    //compose
+    api rootProject.depsLibs.compose_activity
+    api rootProject.depsLibs.compose_viewmodel
+    api rootProject.depsLibs.compose_ui
+    api rootProject.depsLibs.compose_preview
+    api rootProject.depsLibs.compose_material
+    api rootProject.depsLibs.compose_material3
+    api rootProject.depsLibs.compose_animation
+    api rootProject.depsLibs.compose_constraintlayout
+    api rootProject.depsLibs.compose_icons
+    api rootProject.depsLibs.compose_coil
+
+    //navigation
+    api rootProject.depsLibs.navigation
+    api rootProject.depsLibs.navigation_ui
+
+    //第三方库（api：全模块可调用）
+    api rootProject.depsLibs.jetpackmvvm
+
+    api rootProject.depsLibs.okhttp
+    api rootProject.depsLibs.net
+    api rootProject.depsLibs.serialization
+
+    api rootProject.depsLibs.toastutils
+
+    api rootProject.depsLibs.autosize
+
+    api rootProject.depsLibs.smartrefresh
+    api rootProject.depsLibs.smartrefreshmaterial
+    api rootProject.depsLibs.smartrefreshfooter
+
+    api rootProject.depsLibs.shapeview
+    api rootProject.depsLibs.recyclerviewadapter
+    api rootProject.depsLibs.titlebar
+    api rootProject.depsLibs.xpopup
+    api rootProject.depsLibs.logger
+
+    api rootProject.depsLibs.utilcodex
+
+    //ROOM数据库
+    api rootProject.depsLibs.room
+    api rootProject.depsLibs.roomktx
+    kapt rootProject.depsLibs.room_compiler
+
+    api rootProject.depsLibs.languages
+
+
+    //第三方库（implementation：模块内可调用）
+    implementation rootProject.depsLibs.xbanner
+    implementation rootProject.depsLibs.mmkv
+    implementation rootProject.depsLibs.bugly
+    implementation rootProject.depsLibs.glide
+    implementation rootProject.depsLibs.glidetransformations
+    implementation rootProject.depsLibs.agentweb
+    implementation rootProject.depsLibs.magicindicator
+    implementation rootProject.depsLibs.lottie
+    implementation(rootProject.depsLibs.bigimageview, {
+        exclude group: 'com.davemorrissey.labs'
+    })
+
+}
