@@ -21,7 +21,7 @@ import com.example.lib_base.constant.ApiUrls
 import com.example.lib_base.constant.SdkKeys
 import com.example.lib_base.constant.UserKeys
 import com.example.lib_base.event.AppViewModel
-import com.example.lib_base.net.WanSerializationConverter
+import com.example.lib_base.net.WeatherSerializationConverter
 import com.example.lib_base.utils.data.MMKVUtils
 import com.example.lib_base.utils.log.LogUtils
 import com.hjq.language.MultiLanguages
@@ -71,9 +71,6 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
         //MMKV键值对存储
         MMKV.initialize(this)
 
-        //1：日间模式，2：夜间模式，3：跟随系统。
-        AppCompatDelegate.setDefaultNightMode(MMKVUtils.getInt(UserKeys.NIGHT_MODE, 1))
-
         //Bugly崩溃上报
         //设置开发设备
         CrashReport.setIsDevelopmentDevice(this, BuildConfig.DEBUG)
@@ -103,7 +100,7 @@ open class BaseApplication : Application(), ViewModelStoreOwner {
         //协程网络请求库初始化
         NetConfig.initialize(ApiUrls.BASE_WAN_URL, this) {
 
-            setConverter(WanSerializationConverter())
+            setConverter(WeatherSerializationConverter())
 
             // 超时设置
             connectTimeout(30, TimeUnit.SECONDS)

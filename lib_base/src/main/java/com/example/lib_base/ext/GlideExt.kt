@@ -3,16 +3,17 @@ package com.example.lib_base.ext
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
-import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.Rotate
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.lib_base.R
+import com.example.lib_base.utils.ui.UiUtils
 
 /**
  * @CreateDate: 2023/9/2 13:24
@@ -21,9 +22,9 @@ import com.example.lib_base.R
  */
 
 //默认加载图
-val defaultPlaceHolder = R.drawable.shape_glide_loading.toDrawable()
-val defaultError = R.drawable.shape_glide_loading.toDrawable()
-val defaultFallback = R.drawable.shape_glide_loading.toDrawable()
+val defaultPlaceHolder = UiUtils.getDrawable(R.drawable.shape_glide_loading)
+val defaultError = UiUtils.getDrawable(R.drawable.shape_glide_loading)
+val defaultFallback = UiUtils.getDrawable(R.drawable.shape_glide_loading)
 
 @BindingAdapter(
     value = ["imageUrl", "placeholder", "error", "fallback", "loadWidth", "loadHeight", "imageRadius"],
@@ -47,9 +48,9 @@ fun setImageUrl(
 
     //圆角转换
     val transform: MultiTransformation<Bitmap> = if (imageRadius != null && imageRadius > 0) {
-        MultiTransformation(CenterCrop(), RoundedCorners(imageRadius))
+        MultiTransformation(CenterCrop(), RoundedCorners(imageRadius.toFloat().dpToPx().toInt()))
     } else {
-        MultiTransformation(CenterCrop(), Rotate(0))
+        MultiTransformation(FitCenter(), Rotate(0))
     }
 
     val options = RequestOptions.bitmapTransform(transform)

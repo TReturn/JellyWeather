@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--常用颜色-->
+    <color name="transparent">#00000000</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_black">#000000</color>
+    <color name="color_gray">#ffeeeeee</color>
+
+    <color name="color_refresh_bg">#eeeeee</color>
+    <color name="color_refresh_text">#939393</color>
+
+
+    <!--文本颜色-->
+    <color name="text_black">#000000</color>
+    <color name="text_default">#8A000000</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_article_author">#E6A51C</color>
+    <color name="text_article_title">#000000</color>
+    <color name="text_article_source">#359FE5</color>
+
+    <color name="sun_start_color">#fd7e74</color>
+    <color name="sun_end_color">#cdb4ae</color>
+
+</resources>

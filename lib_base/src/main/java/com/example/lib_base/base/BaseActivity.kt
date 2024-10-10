@@ -3,10 +3,7 @@ package com.example.lib_base.base
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.ViewDataBinding
-import com.example.lib_base.constant.UserKeys
-import com.example.lib_base.utils.data.MMKVUtils
 import com.example.lib_base.utils.qmui.QMUIStatusBarHelper
 import com.example.lib_base.utils.ui.LayoutParamsUtils
 import com.hjq.language.MultiLanguages
@@ -26,17 +23,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //白天、夜间模式下设置对应状态栏颜色
-        when (MMKVUtils.getInt(UserKeys.NIGHT_MODE, 1) ){
-            AppCompatDelegate.MODE_NIGHT_NO ->{
-                //设置状态栏黑色字体图标
-                QMUIStatusBarHelper.setStatusBarLightMode(this)
-            }
-            AppCompatDelegate.MODE_NIGHT_YES ->{
-                //设置状态栏白色字体图标
-                QMUIStatusBarHelper.setStatusBarDarkMode(this)
-            }
-        }
+        //设置状态栏白色字体图标
+        QMUIStatusBarHelper.setStatusBarDarkMode(this)
 
         initData()
     }
@@ -53,7 +41,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
         //showLoadingExt(message)
     }
 
-    open fun initData(){
+    open fun initData() {
 
     }
 
@@ -69,7 +57,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
         //dismissLoadingExt()
     }
 
-    /* *//**
+    /* */
+    /**
      * 在任何情况下本来适配正常的布局突然出现适配失效，适配异常等问题，只要重写 Activity 的 getResources() 方法
      *//*
     override fun getResources(): Resources {

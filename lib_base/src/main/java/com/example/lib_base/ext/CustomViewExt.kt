@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -14,10 +13,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.lib_base.BaseApplication
 import com.example.lib_base.R
-import com.example.lib_base.constant.UserKeys
 import com.example.lib_base.list.ListDataUiState
 import com.example.lib_base.magic.ScaleTransitionPagerTitleView
-import com.example.lib_base.utils.data.MMKVUtils
 import com.example.lib_base.utils.ui.UiUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -104,20 +101,11 @@ fun MagicIndicator.bindViewPager2(
                 text = mStringList[index].toHtml()
                 //字体大小
                 textSize = 16f
-                //无法正确加载夜间主题，加个判断切换。
-                when (MMKVUtils.getInt(UserKeys.NIGHT_MODE, 1)) {
-                    AppCompatDelegate.MODE_NIGHT_NO -> {
-                        //未选中颜色
-                        normalColor = UiUtils.getColor(R.color.tab_layout_day_normal)
-                        //选中颜色
-                        selectedColor = UiUtils.getColor(R.color.tab_layout_day_selected)
-                    }
 
-                    AppCompatDelegate.MODE_NIGHT_YES -> {
-                        normalColor = UiUtils.getColor(R.color.tab_layout_night_normal)
-                        selectedColor = UiUtils.getColor(R.color.tab_layout_night_selected)
-                    }
-                }
+                normalColor = UiUtils.getColor(R.color.tab_layout_day_normal)
+                //选中颜色
+                selectedColor = UiUtils.getColor(R.color.tab_layout_day_selected)
+
                 //点击事件
                 setOnClickListener {
                     viewPager.currentItem = index

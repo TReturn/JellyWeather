@@ -10,7 +10,7 @@ import kotlinx.serialization.SerialName
  * @Description :
  */
 @Serializable
-data class WeatherBean(
+data class WeatherRealTimeModel(
     @SerialName("api_status")
     var apiStatus: String = "",
     @SerialName("api_version")
@@ -22,20 +22,20 @@ data class WeatherBean(
     @SerialName("result")
     var result: Result = Result(),
     @SerialName("server_time")
-    var serverTime: Int = 0,
+    var serverTime: Double = 0.0,
     @SerialName("status")
     var status: String = "",
     @SerialName("timezone")
     var timezone: String = "",
     @SerialName("tzshift")
-    var tzshift: Int = 0,
+    var tzshift: Double = 0.0,
     @SerialName("unit")
     var unit: String = ""
 ) {
     @Serializable
     data class Result(
         @SerialName("primary")
-        var primary: Int = 0,
+        var primary: Double = 0.0,
         @SerialName("realtime")
         var realtime: Realtime = Realtime()
     ) {
@@ -116,7 +116,7 @@ data class WeatherBean(
                     @SerialName("desc")
                     var desc: String = "",
                     @SerialName("index")
-                    var index: Int = 0
+                    var index: Double = 0.0
                 )
 
                 @Serializable
@@ -131,24 +131,12 @@ data class WeatherBean(
             @Serializable
             data class Precipitation(
                 @SerialName("local")
-                var local: Local = Local(),
-                @SerialName("nearest")
-                var nearest: Nearest = Nearest()
+                var local: Local = Local()
             ) {
                 @Serializable
                 data class Local(
                     @SerialName("datasource")
                     var datasource: String = "",
-                    @SerialName("intensity")
-                    var intensity: Double = 0.0,
-                    @SerialName("status")
-                    var status: String = ""
-                )
-
-                @Serializable
-                data class Nearest(
-                    @SerialName("distance")
-                    var distance: Double = 0.0,
                     @SerialName("intensity")
                     var intensity: Double = 0.0,
                     @SerialName("status")
