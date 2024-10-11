@@ -9,7 +9,6 @@ import com.example.lib_base.utils.image.GlideUtils
 import com.example.lib_main.databinding.ItemFutureWeatherBinding
 import com.example.lib_main.model.WeatherDayList
 import com.example.lib_main.model.getSky
-import java.util.ArrayList
 
 /**
  * @CreateDate: 2024/10/11 15:49
@@ -18,7 +17,6 @@ import java.util.ArrayList
  */
 class FutureWeatherAdapter :
     BaseQuickAdapter<WeatherDayList, FutureWeatherAdapter.VH>() {
-
 
     private var highMinValue = 100
     private var highMaxValue = 0

@@ -59,10 +59,11 @@ dependencies {
     implementation rootProject.depsLibs.xbanner
     implementation rootProject.depsLibs.magicindicator
     implementation rootProject.depsLibs.permissionx
-    implementation rootProject.depsLibs.qrcode
     implementation rootProject.depsLibs.labelsview
     implementation rootProject.depsLibs.lottie
     implementation rootProject.depsLibs.circleimageview
-    implementation rootProject.depsLibs.mpandroidchart
+
+  //  implementation rootProject.depsLibs.gd_location
+    implementation 'com.amap.api:location:latest.integration'
 
 }

@@ -11,14 +11,15 @@
             android:name="design_height_in_dp"
             android:value="640" />
 
-        <activity
-            android:name=".ui.activity.AboutComposeActivity"
-            android:exported="true" />
+        <service android:name="com.amap.api.location.APSService"></service>
 
-        <activity
-            android:name=".ui.activity.ListComposeActivity"
-            android:exported="true" />
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="fe25e20f8198e1ae6337c26d919abf46">
+
+        </meta-data>
 
     </application>
+
 
 </manifest>

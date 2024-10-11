@@ -1,12 +1,10 @@
 package com.example.lib_base.dialog
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import androidx.fragment.app.FragmentActivity
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.core.CenterPopupView
-import com.lxj.xpopup.interfaces.OnConfirmListener
 
 /**
  * @CreateDate : 2021/8/13

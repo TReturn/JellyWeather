@@ -79,6 +79,7 @@ ext {
             camerax                 : '1.3.0-alpha04',
             round_progressbar       : '3.0.0',
             ucrop                   : '2.2.8-native',
+            gd_location             : '6.4.7'
     ]
 
 
@@ -254,6 +255,9 @@ ext {
 
             //图像裁剪
             ucrop                   : "com.github.yalantis:ucrop:${depsVersion.ucrop}",
+
+            //高德定位
+            gd_location             : "com.zyt.sdk:gd-location:${depsVersion.gd_location}",
 
     ]
 

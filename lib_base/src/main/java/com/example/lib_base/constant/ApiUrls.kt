@@ -18,12 +18,12 @@ object ApiUrls {
         "https://api.caiyunapp.com/v2.6/${SdkKeys.CAIYUN_WEATHER_KEY}"
 
     //实况天气
-    fun getRealTimeWeather(lng: String, lat: String): String {
+    fun getRealTimeWeather(lat: String, lng: String): String {
         return "${CAIYUN_WEATHER_REALTIME}/${lng},${lat}/realtime"
     }
 
     //以天为单位的天气
-    fun getDayWeather(lng: String, lat: String, day: String = "7"): String {
+    fun getDayWeather(lat: String, lng: String, day: String = "7"): String {
         return "${CAIYUN_WEATHER_REALTIME}/${lng},${lat}/daily?dailysteps=$day"
 
     }

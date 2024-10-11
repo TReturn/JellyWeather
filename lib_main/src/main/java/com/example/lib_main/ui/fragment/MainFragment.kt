@@ -6,12 +6,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lib_base.base.BaseFragment
 import com.example.lib_base.ext.init
+import com.example.lib_base.utils.qmui.QMUIStatusBarHelper
+import com.example.lib_main.R
 import com.example.lib_main.databinding.FragmentMainBinding
 import com.example.lib_main.model.WeatherDayList
 import com.example.lib_main.model.getSky
 import com.example.lib_main.ui.adapter.FutureWeatherAdapter
 import com.example.lib_main.ui.widget.FutureWeekUtils
 import com.example.lib_main.viewmodel.MainViewModel
+import me.hgj.jetpackmvvm.ext.nav
+import me.hgj.jetpackmvvm.ext.navigateAction
 
 /**
  * @CreateDate: 2023/8/24 17:10
@@ -20,6 +24,10 @@ import com.example.lib_main.viewmodel.MainViewModel
  */
 class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
 
+    //当前是第几个Fragment
+    private var indexFragment = 0
+
+    //未来天气
     private val futureWeatherAdapter: FutureWeatherAdapter by lazy { FutureWeatherAdapter() }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -30,9 +38,14 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
         initAdapter()
     }
 
+    override fun onResume() {
+        super.onResume()
+        QMUIStatusBarHelper.setStatusBarDarkMode(mActivity)
+    }
+
     override fun initData() {
-        mViewModel.getWeatherRealTime()
-        mViewModel.getWeatherDay()
+        mViewModel.getCityList()
+        mViewModel.getLocation()
     }
 
     private fun initAdapter() {
@@ -47,6 +60,17 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
     @SuppressLint("DefaultLocale")
     override fun createObserver() {
         super.createObserver()
+
+        mViewModel.cityList.observe(viewLifecycleOwner) {
+            if (it.isEmpty()) {
+                mViewModel.getWeatherRealTime()
+                mViewModel.getWeatherDay()
+                return@observe
+            }
+            mViewModel.getWeatherRealTime(it[indexFragment].lat, it[indexFragment].lng)
+            mViewModel.getWeatherDay(it[indexFragment].lat, it[indexFragment].lng)
+            mViewModel.weatherCity.value = it[indexFragment].cityName
+        }
 
         mViewModel.weatherRealTimeData.observe(viewLifecycleOwner) {
             //体感温度
@@ -89,8 +113,12 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
 
     }
 
-    inner class ProxyClick {
 
+    inner class ProxyClick {
+        fun toLocation() {
+            nav().navigateAction(R.id.action_main_to_location)
+
+        }
     }
 
 }

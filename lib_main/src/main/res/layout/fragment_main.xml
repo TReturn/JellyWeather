@@ -50,6 +50,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:text="@{vm.weatherCity}"
+            android:onClick="@{()->click.toLocation()}"
             android:textColor="@color/color_white"
             android:textSize="28sp"
             android:textStyle="bold"

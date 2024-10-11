@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.example.lib_base.room.entity.NoteEntity
+import com.example.lib_base.room.entity.CityEntity
 
 
 /**
@@ -15,15 +15,15 @@ import com.example.lib_base.room.entity.NoteEntity
  */
 
 @Dao
-interface NoteDao {
+interface CityDao {
     @Insert
-    fun save(vararg logs: NoteEntity): List<Long>
+    fun save(vararg logs: CityEntity): List<Long>
 
     @Delete
-    fun delete(vararg logs: NoteEntity): Int
+    fun delete(vararg logs: CityEntity): Int
 
     @Update
-    fun update(vararg logs: NoteEntity)
+    fun update(vararg logs: CityEntity)
 
     @Query("select time from note order by time asc limit 1")
     fun getFirstLogTime(): Long
@@ -32,9 +32,9 @@ interface NoteDao {
     fun getLastLogTime(): Long
 
     @Query("select * from note where time>=:startTime and time <=:endTime")
-    fun getLogByFilter(startTime: Long, endTime: Long): List<NoteEntity>
+    fun getLogByFilter(startTime: Long, endTime: Long): List<CityEntity>
 
-    fun getNoteList(startTime: Long = 0, endTime: Long = 0): List<NoteEntity> {
+    fun getList(startTime: Long = 0, endTime: Long = 0): List<CityEntity> {
         val start = if (startTime == 0L) {
             getFirstLogTime()
         } else {
@@ -49,7 +49,7 @@ interface NoteDao {
     }
 
     @Query("select * from note where id = :noteID")
-    fun getDataByID(noteID: Int): NoteEntity
+    fun getDataByID(noteID: Int): CityEntity
 
     @Query("DELETE FROM note")
     fun deleteAll(): Int
