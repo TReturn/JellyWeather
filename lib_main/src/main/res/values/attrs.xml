@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--温度View-->
+    <declare-styleable name="TemperatureView">
+        <!--绘制线颜色-->
+        <attr name="lineColor" format="reference|color" />
+        <!--温度点颜色-->
+        <attr name="circleColor" format="reference|color" />
+        <!--温度文字位置。1温度线上方。2温度线下方-->
+        <attr name="tempTextPoint" format="integer" />
+    </declare-styleable>
+
+</resources>

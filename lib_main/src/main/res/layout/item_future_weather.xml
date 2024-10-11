@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.example.lib_main.model.WeatherDayList" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="76dp">
+
+        <TextView
+            android:id="@+id/tvDateFormat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="今天"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="03/01"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDateFormat" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivWeather"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDate"
+            tools:src="@drawable/ic_sunny_light" />
+
+
+        <TextView
+            android:id="@+id/tvWeather"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            tools:text="多云"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivWeather" />
+
+
+        <TextView
+            android:id="@+id/tvWeatherNight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:lines="1"
+            android:text="多云"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureViewLow" />
+
+        <com.example.lib_main.ui.widget.TemperatureView
+            android:id="@+id/temperatureViewHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:layout_width="20dp"
+            app:lineColor="#FF5858"
+            app:circleColor="#FF5858"
+            app:tempTextPoint="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvWeather" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="8dp"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="@+id/temperatureViewHigh"
+            app:layout_constraintEnd_toEndOf="@+id/temperatureViewHigh"
+            app:layout_constraintStart_toStartOf="@+id/temperatureViewHigh"
+            app:layout_constraintTop_toTopOf="@+id/temperatureViewHigh" />
+
+        <com.example.lib_main.ui.widget.TemperatureView
+            android:id="@+id/temperatureViewLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:circleColor="#2B8DFB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2"
+            app:lineColor="#2B8DFB"
+            app:tempTextPoint="2"
+            tools:layout_width="20dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

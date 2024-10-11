@@ -2,9 +2,15 @@ package com.example.lib_main.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.lib_base.base.BaseFragment
+import com.example.lib_base.ext.init
 import com.example.lib_main.databinding.FragmentMainBinding
+import com.example.lib_main.model.WeatherDayList
 import com.example.lib_main.model.getSky
+import com.example.lib_main.ui.adapter.FutureWeatherAdapter
+import com.example.lib_main.ui.widget.FutureWeekUtils
 import com.example.lib_main.viewmodel.MainViewModel
 
 /**
@@ -14,15 +20,28 @@ import com.example.lib_main.viewmodel.MainViewModel
  */
 class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
 
+    private val futureWeatherAdapter: FutureWeatherAdapter by lazy { FutureWeatherAdapter() }
+
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.vm = mViewModel
         mDatabind.click = ProxyClick()
         setTranslucent(mDatabind.flTranslucent)
+
+        initAdapter()
     }
 
     override fun initData() {
         mViewModel.getWeatherRealTime()
         mViewModel.getWeatherDay()
+    }
+
+    private fun initAdapter() {
+        //天气趋势折线图
+        mDatabind.rvFutureWeather.init(
+            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false),
+            futureWeatherAdapter,
+            false
+        )
     }
 
     @SuppressLint("DefaultLocale")
@@ -45,6 +64,27 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
             val maxTemp = it.temperature[0].max.toInt()
             val minTemp = it.temperature[0].min.toInt()
             mViewModel.weatherTopTemp.value = "$maxTemp°/$minTemp°"
+
+            //天气趋势折线图
+            val tempList: MutableList<WeatherDayList> = arrayListOf()
+            for (i in it.temperature.indices) {
+                tempList.add(
+                    WeatherDayList(
+                        day = FutureWeekUtils().getFutureWeekDates()[i],
+                        week = FutureWeekUtils().getFutureWeekdays()[i],
+                        max = it.temperature[i].max,
+                        min = it.temperature[i].min,
+                        daySkycon = it.skycon08h20h[i].value,
+                        nightSkycon = it.skycon20h32h[i].value
+                    )
+                )
+
+            }
+
+            tempList[0].week = "今天"
+            tempList[1].week = "明天"
+
+            futureWeatherAdapter.submitList(tempList)
         }
 
     }
