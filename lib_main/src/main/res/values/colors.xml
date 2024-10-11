@@ -19,7 +19,8 @@
     <color name="text_article_title">#000000</color>
     <color name="text_article_source">#359FE5</color>
 
-    <color name="sun_start_color">#fd7e74</color>
-    <color name="sun_end_color">#cdb4ae</color>
+    <color name="sun_start_color">#fd8178</color>
+    <color name="sun_center_color">#e0a098</color>
+    <color name="sun_end_color">#d0b3ad</color>
 
 </resources>

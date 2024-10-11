@@ -45,13 +45,8 @@ class FutureWeatherAdapter :
 
             tvWeather.text = getSky(item.daySkycon).info
             tvWeatherNight.text = getSky(item.nightSkycon).info
-            val icon = getSky(item.daySkycon).icon
-            GlideUtils.loadImage(context, icon, ivWeather)
-
-            //日期
-            tvDateFormat.text = item.week
-            tvDate.text = item.day
-
+            GlideUtils.loadImage(context, getSky(item.daySkycon).icon, ivWeather)
+            GlideUtils.loadImage(context, getSky(item.nightSkycon).icon, ivWeatherNight)
 
             //温度折线图
             for (i in items.indices) {

@@ -124,7 +124,7 @@ class TemperatureView @JvmOverloads constructor(
     //绘制数值
     private fun drawValue(canvas: Canvas) {
         mPaint.run {
-            textSize = 40f
+            textSize = 36f
             setTextColor()
             isFakeBoldText = true
             strokeWidth = 0f
@@ -143,7 +143,7 @@ class TemperatureView @JvmOverloads constructor(
 
     //设置字体颜色
     fun setTextColor() {
-        mPaint.color = Color.BLACK
+        mPaint.color = Color.WHITE
     }
 
     //绘制温度点

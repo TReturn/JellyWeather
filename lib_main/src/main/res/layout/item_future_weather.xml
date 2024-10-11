@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:maxWidth="76dp">
+        tools:background="#d6aba6">
 
         <TextView
             android:id="@+id/tvDateFormat"
@@ -22,9 +22,10 @@
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="今天"
-            android:textColor="#999999"
-            android:textSize="12sp"
+            tools:text="今天"
+            android:text="@{data.week}"
+            android:textColor="#90FFFFFF"
+            android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,8 +35,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="03/01"
-            android:textColor="#999999"
-            android:textSize="12sp"
+            android:text="@{data.day}"
+            android:textColor="#90FFFFFF"
+            android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,10 +45,10 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivWeather"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,18 +60,29 @@
             android:id="@+id/tvWeather"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="8dp"
-            tools:text="多云"
-            android:lines="1"
             android:ellipsize="end"
-            android:textColor="#333333"
-            android:textSize="14sp"
+            android:gravity="center"
+            android:lines="1"
+            android:textColor="@color/white"
+            android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivWeather" />
+            app:layout_constraintTop_toBottomOf="@+id/ivWeather"
+            tools:text="多云" />
 
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivWeatherNight"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/temperatureViewLow"
+            tools:src="@drawable/ic_sunny_light" />
 
         <TextView
             android:id="@+id/tvWeatherNight"
@@ -78,26 +91,26 @@
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
-            android:text="多云"
-            android:textColor="#333333"
-            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperatureViewLow" />
+            app:layout_constraintTop_toBottomOf="@+id/ivWeatherNight"
+            tools:text="多云" />
 
         <com.example.lib_main.ui.widget.TemperatureView
             android:id="@+id/temperatureViewHigh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            tools:layout_width="20dp"
-            app:lineColor="#FF5858"
+            android:layout_marginTop="-8dp"
             app:circleColor="#FF5858"
-            app:tempTextPoint="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvWeather" />
+            app:layout_constraintTop_toBottomOf="@+id/tvWeather"
+            app:lineColor="#FF5858"
+            app:tempTextPoint="1"
+            tools:layout_width="20dp" />
 
         <View
             android:id="@+id/view2"
