@@ -65,7 +65,7 @@ ext {
             serialization           : '1.6.0',
             agentweb                : '5.0.6',
             logger                  : '2.2.0',
-            shapeview               : '9.0',
+            shapeview               : '9.2',
             qrcode                  : '1.1.1',
             utilcodex               : '1.31.1',
             verticaltextview        : '1.4.1',

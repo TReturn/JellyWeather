@@ -1,8 +1,10 @@
 package com.example.lib_main.ui.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lib_base.appViewModel
 import com.example.lib_base.base.BaseFragment
 import com.example.lib_base.ext.init
 import com.example.lib_main.databinding.FragmentWeatherDetailBinding
@@ -11,6 +13,7 @@ import com.example.lib_main.model.getSky
 import com.example.lib_main.ui.adapter.FutureWeatherAdapter
 import com.example.lib_main.ui.widget.FutureWeekUtils
 import com.example.lib_main.viewmodel.WeatherDetailViewModel
+import com.hjq.toast.Toaster
 
 /**
  * @CreateDate: 2024/10/12 18:45
@@ -21,6 +24,9 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
 
     //未来天气
     private val futureWeatherAdapter: FutureWeatherAdapter by lazy { FutureWeatherAdapter() }
+
+    //当前天气
+    private var skycon = ""
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.vm = mViewModel
@@ -33,6 +39,14 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
             val lng = getString(LNG) ?: ""
             mViewModel.getWeatherRealTime(lat, lng)
             mViewModel.getWeatherDay(lat, lng)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (!TextUtils.isEmpty(skycon)){
+            appViewModel.resumeWeatherStatus.value = skycon
         }
     }
 
@@ -58,6 +72,11 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
             mViewModel.weatherStatus.value = getSky(it.skycon).info
             //天气图标
             mViewModel.weatherIcon.value = getSky(it.skycon).icon
+
+            skycon = it.skycon
+            if (isResumed){
+                appViewModel.resumeWeatherStatus.value = skycon
+            }
         }
 
         //未来天气

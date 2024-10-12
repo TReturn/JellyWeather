@@ -17,8 +17,10 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clRoot"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_sun_bg">
 
         <FrameLayout
             android:id="@+id/flTranslucent"
@@ -29,22 +31,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_height="20dp" />
 
-        <com.hjq.shape.view.ShapeView
-            android:id="@+id/vWeatherBg"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:shape_solidGradientCenterColor="@color/sun_center_color"
-            app:shape_solidGradientEndColor="@color/sun_end_color"
-            app:shape_solidGradientOrientation="topToBottom"
-            app:shape_solidGradientStartColor="@color/sun_start_color"
-            app:shape_type="rectangle" />
-
         <TextView
             android:id="@+id/textView"
             android:layout_width="0dp"
@@ -52,6 +38,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="16dp"
+            android:ellipsize="end"
             android:onClick="@{()->click.toLocation()}"
             android:text="@{vm.weatherCity}"
             android:textColor="@color/color_white"

@@ -16,4 +16,7 @@ class AppViewModel : BaseViewModel() {
     //重启APP
     val isRestart = EventLiveData<Boolean>()
 
+    //天气状态
+    val resumeWeatherStatus = EventLiveData<String>()
+
 }

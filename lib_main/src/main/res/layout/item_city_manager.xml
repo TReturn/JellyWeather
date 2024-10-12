@@ -30,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:shape_solidGradientEndColor="@color/sun_center_color"
+            app:shape_solidGradientEndColor="@color/sun_end_color"
             app:shape_solidGradientOrientation="leftToRight"
             app:shape_solidGradientStartColor="@color/sun_start_color"
             app:shape_type="rectangle" />

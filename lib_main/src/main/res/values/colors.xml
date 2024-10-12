@@ -19,8 +19,24 @@
     <color name="text_article_title">#000000</color>
     <color name="text_article_source">#359FE5</color>
 
+    <!--晴天背景颜色-->
     <color name="sun_start_color">#fd8178</color>
-    <color name="sun_center_color">#e0a098</color>
     <color name="sun_end_color">#d0b3ad</color>
+
+    <!--多云背景颜色-->
+    <color name="cloudy_start_color">#93b7c2</color>
+    <color name="cloudy_end_color">#bdbdba</color>
+
+    <!--下雨背景颜色-->
+    <color name="rain_start_color">#aac2ca</color>
+    <color name="rain_end_color">#646f79</color>
+
+    <!--下雪背景颜色-->
+    <color name="snow_start_color">#9caab2</color>
+    <color name="snow_end_color">#c5beb7</color>
+
+    <!--下雾背景颜色-->
+    <color name="fog_start_color">#98918d</color>
+    <color name="fog_end_color">#c5beb7</color>
 
 </resources>

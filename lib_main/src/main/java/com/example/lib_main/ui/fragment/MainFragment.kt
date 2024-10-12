@@ -1,10 +1,15 @@
 package com.example.lib_main.ui.fragment
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.lib_base.BaseApplication
+import com.example.lib_base.appViewModel
 import com.example.lib_base.base.BaseFragment
 import com.example.lib_base.ext.bindViewPager2
 import com.example.lib_base.ext.init
@@ -12,8 +17,9 @@ import com.example.lib_base.magic.ScaleCircleNavigator
 import com.example.lib_base.utils.qmui.QMUIStatusBarHelper
 import com.example.lib_main.R
 import com.example.lib_main.databinding.FragmentMainBinding
+import com.example.lib_main.model.getSky
 import com.example.lib_main.viewmodel.MainViewModel
-import me.hgj.jetpackmvvm.base.Ktx
+import com.hjq.toast.Toaster
 import me.hgj.jetpackmvvm.ext.nav
 import me.hgj.jetpackmvvm.ext.navigateAction
 import net.lucode.hackware.magicindicator.abs.IPagerNavigator
@@ -31,6 +37,9 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
     private var circleNavigator: IPagerNavigator? = null
 
     private var cityNameList: MutableList<String> = arrayListOf()
+
+    //上一个城市天气背景
+    private var lastWeatherBg = 0
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.vm = mViewModel
@@ -54,6 +63,13 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
     @SuppressLint("DefaultLocale")
     override fun createObserver() {
         super.createObserver()
+
+        appViewModel.resumeWeatherStatus.observeInFragment(this) {
+            if (lastWeatherBg == 0) {
+                lastWeatherBg = getSky(it).bg
+            }
+            changeBackgroundSmoothly(mDatabind.clRoot, getSky(it).bg)
+        }
 
         mViewModel.cityList.observe(viewLifecycleOwner) {
             cityNameList.clear()
@@ -81,10 +97,11 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
         //初始化viewpager2
         mDatabind.vpWeather.init(this, fragmentList)
         //初始化magicIndicator
-        mDatabind.magicIndicator.bindViewPager2(mDatabind.vpWeather,circleNavigator) {
+        mDatabind.magicIndicator.bindViewPager2(mDatabind.vpWeather, circleNavigator) {
             if (it < cityNameList.size) {
                 mViewModel.weatherCity.value = cityNameList[it]
             }
+
         }
 
         if (cityNameList.size >= 2) {
@@ -105,6 +122,22 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
         circleNavigator = ScaleCircleNavigator(BaseApplication.context)
         (circleNavigator as ScaleCircleNavigator).setNormalCircleColor(Color.parseColor("#4DFFFFFF"))
         (circleNavigator as ScaleCircleNavigator).setSelectedCircleColor(Color.WHITE)
+    }
+
+    /**
+     * 切换城市背景平滑过渡
+     * @param view View
+     * @param newBg Int
+     */
+    private fun changeBackgroundSmoothly(view: View, newBg: Int) {
+        val layers = arrayOfNulls<Drawable>(2)
+        layers[0] = mActivity.getDrawable(lastWeatherBg)
+        layers[1] = mActivity.getDrawable(newBg)
+
+        val transitionDrawable = TransitionDrawable(layers)
+        view.background = transitionDrawable
+        transitionDrawable.startTransition(500)
+        lastWeatherBg = newBg
     }
 
 
