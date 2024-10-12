@@ -23,11 +23,20 @@ class WeatherDetailViewModel : BaseViewModel() {
     //未来几天天气数据
     val weatherDayData = MutableLiveData<WeatherDayModel.Result.Daily>()
 
+    //温度数据
     val weatherTemp = MutableLiveData<String>()
     val weatherTopTemp = MutableLiveData<String>()
     val weatherHumidity = MutableLiveData<String>()
     val weatherStatus = MutableLiveData<String>()
     val weatherIcon = MutableLiveData<Int>()
+
+    //日出日落
+    val weatherSunrise = MutableLiveData<String>()
+    val weatherSunset = MutableLiveData<String>()
+    //风向
+    val weatherWindDirection = MutableLiveData<String>()
+    //风速
+    val weatherWindSpeed = MutableLiveData<String>()
 
     /**
      * 获取实时天气

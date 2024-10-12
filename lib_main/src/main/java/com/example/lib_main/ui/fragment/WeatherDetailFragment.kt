@@ -48,6 +48,7 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
     override fun createObserver() {
         super.createObserver()
 
+        //实时数据
         mViewModel.weatherRealTimeData.observe(viewLifecycleOwner) {
             //体感温度
             mViewModel.weatherTemp.value = "${String.format("%.1f", it.temperature)}°"
@@ -59,11 +60,20 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
             mViewModel.weatherIcon.value = getSky(it.skycon).icon
         }
 
+        //未来天气
         mViewModel.weatherDayData.observe(viewLifecycleOwner) {
             //最高温、最低温
             val maxTemp = it.temperature[0].max.toInt()
             val minTemp = it.temperature[0].min.toInt()
             mViewModel.weatherTopTemp.value = "$maxTemp°/$minTemp°"
+
+            //日出日落
+            mViewModel.weatherSunrise.value = it.astro[0].sunrise.time
+            mViewModel.weatherSunset.value = it.astro[0].sunset.time
+
+            //风向风速
+            mViewModel.weatherWindDirection.value = "${it.wind[0].max.direction}"
+            mViewModel.weatherWindSpeed.value = "${it.wind[0].max.speed}"
 
             //天气趋势折线图
             val tempList: MutableList<WeatherDayList> = arrayListOf()
@@ -81,9 +91,10 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
 
             }
 
-            tempList[0].week = "今天"
-            tempList[1].week = "明天"
-
+            if (tempList.size > 2) {
+                tempList[0].week = "今天"
+                tempList[1].week = "明天"
+            }
             futureWeatherAdapter.submitList(tempList)
         }
     }
