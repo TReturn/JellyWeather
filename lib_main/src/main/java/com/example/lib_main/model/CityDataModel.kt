@@ -10,5 +10,6 @@ data class CityDataModel(
     var adcode: String = "",
     var formattedAddress: String = "",
     var lat: String = "",
-    var lng: String = ""
+    var lng: String = "",
+    var isAdd:Boolean = false,
 )

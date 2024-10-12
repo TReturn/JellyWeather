@@ -76,7 +76,7 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
             //体感温度
             mViewModel.weatherTemp.value = "${String.format("%.1f", it.temperature)}°"
             //湿度
-            mViewModel.weatherHumidity.value = "${it.humidity * 100}%"
+            mViewModel.weatherHumidity.value = "${(it.humidity * 100).toInt()}%"
             //天气状态
             mViewModel.weatherStatus.value = getSky(it.skycon).info
             //天气图标

@@ -48,8 +48,8 @@ interface CityDao {
         return getLogByFilter(start, end)
     }
 
-    @Query("select * from note where id = :noteID")
-    fun getDataByID(noteID: Int): CityEntity
+    @Query("select * from note where id = :id")
+    fun getDataByID(id: Int): CityEntity
 
     @Query("DELETE FROM note")
     fun deleteAll(): Int

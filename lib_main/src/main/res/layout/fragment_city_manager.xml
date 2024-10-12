@@ -41,13 +41,15 @@
             android:id="@+id/rvCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            tools:listitem="@layout/item_city_manager"
-            app:spanCount="2"
+            android:layout_marginEnd="8dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/include" />
+            app:layout_constraintTop_toBottomOf="@+id/include"
+            app:spanCount="1"
+            tools:listitem="@layout/item_city_manager" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

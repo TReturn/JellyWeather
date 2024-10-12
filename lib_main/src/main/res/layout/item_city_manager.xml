@@ -8,6 +8,7 @@
         <variable
             name="data"
             type="com.example.lib_base.room.entity.CityEntity" />
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:paddingBottom="16dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <com.hjq.shape.view.ShapeView
             android:id="@+id/vWeatherBg"
@@ -34,17 +36,33 @@
             app:shape_type="rectangle" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:text="棠下荷光四横路"
-            android:text="@{data.cityName}"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
+            android:layout_marginEnd="8dp"
             android:paddingStart="8dp"
+            android:paddingTop="16dp"
             android:paddingEnd="8dp"
+            android:paddingBottom="16dp"
+            android:text="@{data.cityName}"
             android:textColor="@color/white"
+            android:textSize="16sp"
             android:textStyle="bold"
-            android:textSize="16sp"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivDelete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="棠下荷光四横路" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="@{data.myLocation?View.INVISIBLE:View.VISIBLE}"
+            android:src="@drawable/ic_delete_city"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

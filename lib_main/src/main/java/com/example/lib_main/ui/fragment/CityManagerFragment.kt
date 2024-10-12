@@ -2,21 +2,17 @@ package com.example.lib_main.ui.fragment
 
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.amap.api.location.AMapLocation
+import com.chad.library.adapter.base.BaseQuickAdapter.OnItemChildClickListener
+import com.example.lib_base.appViewModel
 import com.example.lib_base.base.BaseFragment
 import com.example.lib_base.dialog.DialogManager
 import com.example.lib_base.ext.init
 import com.example.lib_base.room.entity.CityEntity
-import com.example.lib_base.utils.log.LogUtils
 import com.example.lib_base.utils.qmui.QMUIStatusBarHelper
+import com.example.lib_main.R
 import com.example.lib_main.databinding.FragmentCityManagerBinding
 import com.example.lib_main.ui.adapter.CityManagerAdapter
-import com.example.lib_main.ui.adapter.FutureWeatherAdapter
 import com.example.lib_main.ui.dialog.SearchCityDialog
-import com.example.lib_main.utils.GDLocationUtils
-import com.example.lib_main.utils.ReadJsonArrayUtils
 import com.example.lib_main.viewmodel.CityManagerViewModel
 import com.hjq.bar.OnTitleBarListener
 import com.hjq.bar.TitleBar
@@ -53,16 +49,23 @@ class CityManagerFragment : BaseFragment<CityManagerViewModel, FragmentCityManag
     }
 
     private fun initAdapter() {
-        mDatabind.rvCity.init(GridLayoutManager(context, 2), cityManagerAdapter, false)
+        mDatabind.rvCity.init(GridLayoutManager(context, 1), cityManagerAdapter, false)
         cityManagerAdapter.run {
             setOnItemClickListener { _, view, position ->
                 val data = getItem(position) ?: return@setOnItemClickListener
                 if (position == 0) {
                     //增加城市
                     DialogManager.get(mActivity).asCustom(SearchCityDialog(mActivity) {
-
+                        mViewModel.updateCityList(it)
                     }).show()
                 }
+            }
+
+            addOnItemChildClickListener(R.id.ivDelete) { _, _, position ->
+                val data = getItem(position) ?: return@addOnItemChildClickListener
+                if (data.isMyLocation) return@addOnItemChildClickListener
+                //删除城市
+                mViewModel.deleteCity(data.id)
             }
         }
     }
@@ -72,9 +75,8 @@ class CityManagerFragment : BaseFragment<CityManagerViewModel, FragmentCityManag
 
         mViewModel.cityList.observe(viewLifecycleOwner) {
             val newList: MutableList<CityEntity> = mutableListOf()
-            newList.add(CityEntity(cityName = "增加城市"))
+            newList.add(CityEntity(cityName = "增加城市", isMyLocation = true))
             newList.addAll(it)
-
 
             cityManagerAdapter.submitList(newList)
         }
