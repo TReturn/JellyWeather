@@ -6,10 +6,11 @@ package com.example.lib_main.model
  * @Author: 青柠
  * @Description:
  */
+
 data class CityDataModel(
     var adcode: String = "",
     var formattedAddress: String = "",
     var lat: String = "",
     var lng: String = "",
-    var isAdd:Boolean = false,
+    var isAdd: Boolean = false,
 )

@@ -14,10 +14,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.lib_base.BaseApplication
 import com.example.lib_base.R
 import com.example.lib_base.list.ListDataUiState
+import com.example.lib_base.magic.ScaleCircleNavigator
 import com.example.lib_base.magic.ScaleTransitionPagerTitleView
 import com.example.lib_base.utils.ui.UiUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
+import me.hgj.jetpackmvvm.base.Ktx
 import me.hgj.jetpackmvvm.ext.util.toHtml
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.abs.IPagerNavigator

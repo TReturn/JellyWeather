@@ -1,21 +1,22 @@
 package com.example.lib_main.ui.fragment
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import com.example.lib_base.BaseApplication
 import com.example.lib_base.base.BaseFragment
+import com.example.lib_base.ext.bindViewPager2
 import com.example.lib_base.ext.init
+import com.example.lib_base.magic.ScaleCircleNavigator
 import com.example.lib_base.utils.qmui.QMUIStatusBarHelper
 import com.example.lib_main.R
 import com.example.lib_main.databinding.FragmentMainBinding
-import com.example.lib_main.model.WeatherDayList
-import com.example.lib_main.model.getSky
-import com.example.lib_main.ui.adapter.FutureWeatherAdapter
-import com.example.lib_main.ui.widget.FutureWeekUtils
 import com.example.lib_main.viewmodel.MainViewModel
+import me.hgj.jetpackmvvm.base.Ktx
 import me.hgj.jetpackmvvm.ext.nav
 import me.hgj.jetpackmvvm.ext.navigateAction
+import net.lucode.hackware.magicindicator.abs.IPagerNavigator
 
 /**
  * @CreateDate: 2023/8/24 17:10
@@ -24,18 +25,18 @@ import me.hgj.jetpackmvvm.ext.navigateAction
  */
 class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
 
-    //当前是第几个Fragment
-    private var indexFragment = 0
+    //是否已创建好ViewPager
+    private var isInitViewPager = false
 
-    //未来天气
-    private val futureWeatherAdapter: FutureWeatherAdapter by lazy { FutureWeatherAdapter() }
+    private var circleNavigator: IPagerNavigator? = null
+
+    private var cityNameList: MutableList<String> = arrayListOf()
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.vm = mViewModel
         mDatabind.click = ProxyClick()
         setTranslucent(mDatabind.flTranslucent)
 
-        initAdapter()
     }
 
     override fun onResume() {
@@ -44,73 +45,66 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
     }
 
     override fun initData() {
+        initNavigator()
         mViewModel.getCityList()
         mViewModel.getLocation()
     }
 
-    private fun initAdapter() {
-        //天气趋势折线图
-        mDatabind.rvFutureWeather.init(
-            LinearLayoutManager(context, RecyclerView.HORIZONTAL, false),
-            futureWeatherAdapter,
-            false
-        )
-    }
 
     @SuppressLint("DefaultLocale")
     override fun createObserver() {
         super.createObserver()
 
         mViewModel.cityList.observe(viewLifecycleOwner) {
-            if (it.isEmpty()) {
-                mViewModel.getWeatherRealTime()
-                mViewModel.getWeatherDay()
-                return@observe
-            }
-            mViewModel.getWeatherRealTime(it[indexFragment].lat, it[indexFragment].lng)
-            mViewModel.getWeatherDay(it[indexFragment].lat, it[indexFragment].lng)
-            mViewModel.weatherCity.value = it[indexFragment].cityName
-        }
-
-        mViewModel.weatherRealTimeData.observe(viewLifecycleOwner) {
-            //体感温度
-            mViewModel.weatherTemp.value = "${String.format("%.1f", it.temperature)}°"
-            //湿度
-            mViewModel.weatherHumidity.value = "${(it.humidity * 100).toInt()}%"
-            //天气状态
-            mViewModel.weatherStatus.value = getSky(it.skycon).info
-            //天气图标
-            mViewModel.weatherIcon.value = getSky(it.skycon).icon
-        }
-
-        mViewModel.weatherDayData.observe(viewLifecycleOwner) {
-            //最高温、最低温
-            val maxTemp = it.temperature[0].max.toInt()
-            val minTemp = it.temperature[0].min.toInt()
-            mViewModel.weatherTopTemp.value = "$maxTemp°/$minTemp°"
-
-            //天气趋势折线图
-            val tempList: MutableList<WeatherDayList> = arrayListOf()
-            for (i in it.temperature.indices) {
-                tempList.add(
-                    WeatherDayList(
-                        day = FutureWeekUtils().getFutureWeekDates()[i],
-                        week = FutureWeekUtils().getFutureWeekdays()[i],
-                        max = it.temperature[i].max,
-                        min = it.temperature[i].min,
-                        daySkycon = it.skycon08h20h[i].value,
-                        nightSkycon = it.skycon20h32h[i].value
-                    )
-                )
-
+            cityNameList.clear()
+            val fragmentList: ArrayList<Fragment> = arrayListOf()
+            for (city in it) {
+                cityNameList.add(city.cityName)
+                fragmentList.add(WeatherDetailFragment.newInstance(city.lat, city.lng))
             }
 
-            tempList[0].week = "今天"
-            tempList[1].week = "明天"
+            initViewPager2(fragmentList)
 
-            futureWeatherAdapter.submitList(tempList)
+            if (cityNameList.isNotEmpty()) {
+                mViewModel.weatherCity.value = cityNameList[0]
+            }
+
         }
 
+    }
+
+    /**
+     * 初始化viewpager2
+     * @param fragmentList ArrayList<Fragment>
+     */
+    private fun initViewPager2(fragmentList: ArrayList<Fragment>) {
+        //初始化viewpager2
+        mDatabind.vpWeather.init(this, fragmentList)
+        //初始化magicIndicator
+        mDatabind.magicIndicator.bindViewPager2(mDatabind.vpWeather,circleNavigator) {
+            if (it < cityNameList.size) {
+                mViewModel.weatherCity.value = cityNameList[it]
+            }
+        }
+
+        if (cityNameList.size >= 2) {
+            mDatabind.vpWeather.offscreenPageLimit = 1
+        }
+
+        isInitViewPager = true
+
+        //更新小圆点选中
+        (circleNavigator as ScaleCircleNavigator).setCircleCount(fragmentList.size)
+        circleNavigator?.notifyDataSetChanged()
+    }
+
+    /**
+     * 初始化ViewPager圆点
+     */
+    private fun initNavigator() {
+        circleNavigator = ScaleCircleNavigator(BaseApplication.context)
+        (circleNavigator as ScaleCircleNavigator).setNormalCircleColor(Color.parseColor("#4DFFFFFF"))
+        (circleNavigator as ScaleCircleNavigator).setSelectedCircleColor(Color.WHITE)
     }
 
 

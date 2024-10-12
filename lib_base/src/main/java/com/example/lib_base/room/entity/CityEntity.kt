@@ -16,9 +16,6 @@ class CityEntity() {
     var id: Int = 0
     var time: Long = 0
 
-    //编码
-    var code: String = ""
-
     //城市名称
     var cityName: String = ""
 

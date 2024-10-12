@@ -39,7 +39,7 @@ class CityManagerViewModel : BaseViewModel() {
     fun updateCityList(data: CityDataModel) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val cityEntity = CityEntity(data.formattedAddress, data.lat, data.lng)
+                val cityEntity = CityEntity(data.formattedAddress, data.lng, data.lat)
                 CityManager.cityDB.cityDao.save(cityEntity)
 
                 //刷新数据
