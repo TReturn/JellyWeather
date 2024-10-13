@@ -25,13 +25,13 @@ interface CityDao {
     @Update
     fun update(vararg logs: CityEntity)
 
-    @Query("select time from note order by time asc limit 1")
+    @Query("select time from city order by time asc limit 1")
     fun getFirstLogTime(): Long
 
-    @Query("select time from note order by time desc limit 1")
+    @Query("select time from city order by time desc limit 1")
     fun getLastLogTime(): Long
 
-    @Query("select * from note where time>=:startTime and time <=:endTime")
+    @Query("select * from city where time>=:startTime and time <=:endTime")
     fun getLogByFilter(startTime: Long, endTime: Long): List<CityEntity>
 
     fun getList(startTime: Long = 0, endTime: Long = 0): List<CityEntity> {
@@ -48,10 +48,10 @@ interface CityDao {
         return getLogByFilter(start, end)
     }
 
-    @Query("select * from note where id = :id")
+    @Query("select * from city where id = :id")
     fun getDataByID(id: Int): CityEntity
 
-    @Query("DELETE FROM note")
+    @Query("DELETE FROM city")
     fun deleteAll(): Int
 
 }

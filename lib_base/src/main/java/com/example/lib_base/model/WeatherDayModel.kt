@@ -1,4 +1,4 @@
-package com.example.lib_main.model
+package com.example.lib_base.model
 import kotlinx.serialization.Serializable
 
 import kotlinx.serialization.SerialName

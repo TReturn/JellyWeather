@@ -193,6 +193,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/rvFutureWeather" />
 
             <include
+                android:id="@+id/includeWeatherInfo"
                 layout="@layout/include_weather_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,7 +202,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/view3"
                 app:vm="@{vm}" />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

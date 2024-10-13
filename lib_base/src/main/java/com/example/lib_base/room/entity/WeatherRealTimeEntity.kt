@@ -10,8 +10,8 @@ import androidx.room.PrimaryKey
  * @Description:
  */
 
-@Entity(tableName = "city")
-class CityEntity() {
+@Entity(tableName = "weather_real_time")
+class WeatherRealTimeEntity() {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
     var time: Long = 0
@@ -19,26 +19,18 @@ class CityEntity() {
     //城市名称
     var cityName: String = ""
 
-    //经度
-    var lat: String = ""
-
-    //纬度
-    var lng: String = ""
-
-    //是否为当前定位城市
-    var isMyLocation: Boolean = false
+    //天气数据，使用String存储
+    var realTimeData: String = ""
 
     @Ignore
     constructor(
         cityName: String,
-        lat: String = "",
-        lng: String="",
-        isMyLocation: Boolean = false
+        realTimeData: String
     ) : this() {
         time = System.currentTimeMillis()
         this.cityName = cityName
-        this.lat = lat
-        this.lng = lng
-        this.isMyLocation = isMyLocation
+        this.realTimeData = realTimeData
+
+
     }
 }

@@ -76,7 +76,13 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
             val fragmentList: ArrayList<Fragment> = arrayListOf()
             for (city in it) {
                 cityNameList.add(city.cityName)
-                fragmentList.add(WeatherDetailFragment.newInstance(city.lat, city.lng))
+                fragmentList.add(
+                    WeatherDetailFragment.newInstance(
+                        city.cityName,
+                        city.lat,
+                        city.lng
+                    )
+                )
             }
 
             initViewPager2(fragmentList)
@@ -129,6 +135,7 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
      * @param view View
      * @param newBg Int
      */
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun changeBackgroundSmoothly(view: View, newBg: Int) {
         val layers = arrayOfNulls<Drawable>(2)
         layers[0] = mActivity.getDrawable(lastWeatherBg)

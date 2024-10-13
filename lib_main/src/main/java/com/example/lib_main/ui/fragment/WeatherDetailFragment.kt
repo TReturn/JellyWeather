@@ -35,17 +35,18 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
         initAdapter()
 
         arguments?.run {
+            val cityName = getString(CITY_NAME) ?: ""
             val lat = getString(LAT) ?: ""
             val lng = getString(LNG) ?: ""
-            mViewModel.getWeatherRealTime(lat, lng)
-            mViewModel.getWeatherDay(lat, lng)
+            mViewModel.getWeatherRealTime(cityName,lat, lng)
+            mViewModel.getWeatherDay(cityName,lat, lng)
         }
     }
 
     override fun onResume() {
         super.onResume()
 
-        if (!TextUtils.isEmpty(skycon)){
+        if (!TextUtils.isEmpty(skycon)) {
             appViewModel.resumeWeatherStatus.value = skycon
         }
     }
@@ -74,7 +75,7 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
             mViewModel.weatherIcon.value = getSky(it.skycon).icon
 
             skycon = it.skycon
-            if (isResumed){
+            if (isResumed) {
                 appViewModel.resumeWeatherStatus.value = skycon
             }
         }
@@ -123,11 +124,13 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
     }
 
     companion object {
+        private const val CITY_NAME = "CITY_NAME"
         private const val LAT = "LAT"
         private const val LNG = "LNG"
-        fun newInstance(lat: String, lng: String): WeatherDetailFragment {
+        fun newInstance(cityName: String, lat: String, lng: String): WeatherDetailFragment {
             return WeatherDetailFragment().apply {
                 this.arguments = Bundle().apply {
+                    putString(CITY_NAME, cityName)
                     putString(LAT, lat)
                     putString(LNG, lng)
                 }
