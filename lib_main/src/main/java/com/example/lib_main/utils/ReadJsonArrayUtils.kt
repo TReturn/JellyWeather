@@ -1,8 +1,7 @@
 package com.example.lib_main.utils
 
 import android.content.Context
-import com.example.lib_main.model.CityDataModel
-import org.json.JSONArray
+import com.example.lib_base.model.CityDataModel
 import org.json.JSONObject
 
 /**
@@ -26,14 +25,12 @@ class ReadJsonArrayUtils {
             val cityDataList = mutableListOf<CityDataModel>()
             for (i in 0 until jsonArray.length()) {
                 val cityJsonObject = jsonArray.getJSONObject(i)
-                val adcode = cityJsonObject.getString("adcode")
-                val formattedAddress = cityJsonObject.getString("formatted_address")
+                val cityName = cityJsonObject.getString("formatted_address")
                 val lng = cityJsonObject.getString("lng")
                 val lat = cityJsonObject.getString("lat")
                 cityDataList.add(
                     CityDataModel(
-                        adcode,
-                        formattedAddress,
+                        cityName,
                         lng,
                         lat
                     )

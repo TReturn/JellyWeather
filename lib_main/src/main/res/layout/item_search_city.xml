@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.example.lib_main.model.CityDataModel" />
+            type="com.example.lib_base.model.CityDataModel" />
 
         <import type="android.view.View" />
     </data>
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="16dp"
-            android:text="@{data.formattedAddress}"
+            android:text="@{data.cityName}"
             android:textColor="@color/color_black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"

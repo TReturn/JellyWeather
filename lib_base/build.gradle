@@ -121,5 +121,7 @@ dependencies {
     implementation(rootProject.depsLibs.bigimageview, {
         exclude group: 'com.davemorrissey.labs'
     })
+    //权限申请
+    implementation rootProject.depsLibs.permissionx
 
 }

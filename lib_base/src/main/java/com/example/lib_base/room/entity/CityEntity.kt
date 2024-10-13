@@ -26,19 +26,19 @@ class CityEntity() {
     var lng: String = ""
 
     //是否为当前定位城市
-    var isMyLocation: Boolean = false
+    var isLocation: Boolean = false
 
     @Ignore
     constructor(
         cityName: String,
         lat: String = "",
         lng: String="",
-        isMyLocation: Boolean = false
+        isLocation: Boolean = false
     ) : this() {
         time = System.currentTimeMillis()
         this.cityName = cityName
         this.lat = lat
         this.lng = lng
-        this.isMyLocation = isMyLocation
+        this.isLocation = isLocation
     }
 }

@@ -1,6 +1,5 @@
 package com.example.lib_main.ui.fragment
 
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.Drawable
@@ -14,12 +13,12 @@ import com.example.lib_base.base.BaseFragment
 import com.example.lib_base.ext.bindViewPager2
 import com.example.lib_base.ext.init
 import com.example.lib_base.magic.ScaleCircleNavigator
+import com.example.lib_base.permission.PermissionUtils
 import com.example.lib_base.utils.qmui.QMUIStatusBarHelper
 import com.example.lib_main.R
 import com.example.lib_main.databinding.FragmentMainBinding
 import com.example.lib_main.model.getSky
 import com.example.lib_main.viewmodel.MainViewModel
-import com.hjq.toast.Toaster
 import me.hgj.jetpackmvvm.ext.nav
 import me.hgj.jetpackmvvm.ext.navigateAction
 import net.lucode.hackware.magicindicator.abs.IPagerNavigator
@@ -51,14 +50,20 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
     override fun onResume() {
         super.onResume()
         QMUIStatusBarHelper.setStatusBarDarkMode(mActivity)
+
     }
 
     override fun initData() {
         initNavigator()
         mViewModel.getCityList()
-        mViewModel.getLocation()
-    }
 
+        //定位权限申请
+        PermissionUtils.location(mActivity) {
+            if (it) {
+                mViewModel.getLocation()
+            }
+        }
+    }
 
     @SuppressLint("DefaultLocale")
     override fun createObserver() {
@@ -80,7 +85,8 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
                     WeatherDetailFragment.newInstance(
                         city.cityName,
                         city.lat,
-                        city.lng
+                        city.lng,
+                        city.isLocation
                     )
                 )
             }

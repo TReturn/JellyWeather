@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.example.lib_main.databinding.ItemSearchCityBinding
-import com.example.lib_main.model.CityDataModel
+import com.example.lib_base.model.CityDataModel
 
 /**
  * @CreateDate: 2024/10/12 03:50

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.lib_base.room.entity.CityEntity
 import com.example.lib_base.room.manager.CityManager
-import com.example.lib_main.model.CityDataModel
+import com.example.lib_base.model.CityDataModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
@@ -39,7 +39,7 @@ class CityManagerViewModel : BaseViewModel() {
     fun updateCityList(data: CityDataModel) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val cityEntity = CityEntity(data.formattedAddress, data.lng, data.lat)
+                val cityEntity = CityEntity(data.cityName, data.lng, data.lat)
                 CityManager.cityDB.cityDao.save(cityEntity)
 
                 //刷新数据

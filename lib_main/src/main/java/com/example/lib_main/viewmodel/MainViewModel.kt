@@ -3,9 +3,14 @@ package com.example.lib_main.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.amap.api.location.AMapLocation
+import com.example.lib_base.appViewModel
+import com.example.lib_base.constant.UserKeys
+import com.example.lib_base.model.CityDataModel
 import com.example.lib_base.room.entity.CityEntity
 import com.example.lib_base.room.manager.CityManager
+import com.example.lib_base.utils.data.MMKVUtils
 import com.example.lib_base.utils.log.LogUtils
+import com.example.lib_main.utils.CacheTimeUtils
 import com.example.lib_main.utils.GDLocationUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,6 +26,7 @@ class MainViewModel : BaseViewModel() {
     //已添加的城市列表
     val cityList = MutableLiveData<List<CityEntity>>()
 
+    //城市名
     val weatherCity = MutableLiveData<String>()
 
     val isShowMagicIndicator = MutableLiveData<Boolean>()
@@ -37,7 +43,7 @@ class MainViewModel : BaseViewModel() {
                     //列表为空，增加一条
                     list.add(CityEntity("香港特别行政区", "22.277468", "114.171203", true))
                 }
-                cityList.postValue(CityManager.cityDB.cityDao.getList())
+                cityList.postValue(list)
             } catch (exception: Exception) {
                 exception.printStackTrace()
             }
@@ -48,6 +54,13 @@ class MainViewModel : BaseViewModel() {
      * 获取定位
      */
     fun getLocation() {
+        //30分钟内不重复定位
+        if (CacheTimeUtils.isWithin30Minutes(
+                System.currentTimeMillis(),
+                MMKVUtils.getLong(UserKeys.LAST_GET_LOCATION_TIME)
+            )
+        ) return
+
         GDLocationUtils.initLocation()
             .setGDLocationSuccessListener(object : GDLocationUtils.OnGDLocationSuccessListener {
                 override fun onSuccess(amapLocation: AMapLocation) {
@@ -67,16 +80,17 @@ class MainViewModel : BaseViewModel() {
                         amapLocation.latitude.toString(),
                         amapLocation.longitude.toString()
                     )
+                    MMKVUtils.put(UserKeys.LAST_GET_LOCATION_TIME, System.currentTimeMillis())
 
-//                    LogUtils.d(
-//                        "\n纬度:${amapLocation.latitude}"
-//                                + "\n经度:${amapLocation.longitude}"
-//                                + "\n省信息:${amapLocation.province}"
-//                                + "\n城市信息:${amapLocation.city}"
-//                                + "\n城区信息:${amapLocation.district}"
-//                                + "\n街道信息:${amapLocation.street}"
-//
-//                    )
+                    LogUtils.d(
+                        "\n纬度:${amapLocation.latitude}"
+                                + "\n经度:${amapLocation.longitude}"
+                                + "\n省信息:${amapLocation.province}"
+                                + "\n城市信息:${amapLocation.city}"
+                                + "\n城区信息:${amapLocation.district}"
+                                + "\n街道信息:${amapLocation.street}"
+
+                    )
                 }
 
             })
@@ -99,13 +113,15 @@ class MainViewModel : BaseViewModel() {
 
                     //首次定位，更新天气
                     weatherCity.postValue(cityName)
+                    appViewModel.refreshLocationWeather.postValue(CityDataModel(cityName,lat,lng))
                 } else {
                     //更新数据库
                     for (city in cityList) {
-                        if (city.isMyLocation) {
+                        if (city.isLocation) {
                             if (city.cityName != cityName) {
                                 //定位变动，更新天气
                                 weatherCity.postValue(cityName)
+                                appViewModel.refreshLocationWeather.postValue(CityDataModel(cityName,lat,lng))
                             }
                             city.cityName = cityName
                             city.lat = lat

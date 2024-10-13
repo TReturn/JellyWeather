@@ -64,15 +64,15 @@ class WeatherDetailViewModel : BaseViewModel() {
 
                 if (data == null) {
                     requestWeatherRealTime(cityName, lat, lng)
-                    log("实时天气:无数据，请求网络")
+                    log("实时天气-$cityName:无数据，请求网络")
                 } else {
                     val realTimeData = WeatherRealTimeConverter().to(data.realTimeData)
                     weatherRealTimeData.postValue(realTimeData)
-                    log("实时天气，有数据，使用数据库")
+                    log("实时天气-$cityName，有数据，使用数据库")
                     //30分钟以内缓存有效
                     if (!CacheTimeUtils.isWithin30Minutes(data.time, System.currentTimeMillis())) {
                         requestWeatherRealTime(cityName, lat, lng)
-                        log("实时天气，数据库过期，请求网络")
+                        log("实时天气-$cityName，数据库过期，请求网络")
                     }
                 }
 
@@ -147,15 +147,15 @@ class WeatherDetailViewModel : BaseViewModel() {
 
                 if (data == null) {
                     requestWeatherDay(cityName, lat, lng)
-                    log("未来天气:无数据，请求网络")
+                    log("未来天气-$cityName:无数据，请求网络")
                 } else {
                     val dayData = WeatherDayConverter().to(data.dayData)
                     weatherDayData.postValue(dayData)
-                    log("未来天气，有数据，使用数据库")
+                    log("未来天气-$cityName:有数据，使用数据库")
                     //缓存超过两小时，请求网络
                     if (!CacheTimeUtils.isWithin2Hours(data.time, System.currentTimeMillis())) {
                         requestWeatherDay(cityName, lat, lng)
-                        log("未来天气，数据库过期，请求网络")
+                        log("未来天气-$cityName:数据库过期，请求网络")
                     }
                 }
 

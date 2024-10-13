@@ -58,7 +58,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="16dp"
-            android:visibility="@{data.myLocation?View.INVISIBLE:View.VISIBLE}"
+            android:visibility="@{data.location?View.INVISIBLE:View.VISIBLE}"
             android:src="@drawable/ic_delete_city"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

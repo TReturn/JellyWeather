@@ -1,5 +1,7 @@
 package com.example.lib_base.event
 
+import com.example.lib_base.model.CityDataModel
+import com.example.lib_base.room.entity.CityEntity
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 import me.hgj.jetpackmvvm.callback.livedata.event.EventLiveData
 
@@ -18,5 +20,8 @@ class AppViewModel : BaseViewModel() {
 
     //天气状态
     val resumeWeatherStatus = EventLiveData<String>()
+
+    //刷新定位天气
+    val refreshLocationWeather = EventLiveData<CityDataModel>()
 
 }

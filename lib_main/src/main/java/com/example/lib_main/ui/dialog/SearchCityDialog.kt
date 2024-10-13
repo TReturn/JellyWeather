@@ -5,7 +5,6 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.lib_base.dialog.BaseBottomDialog
 import com.example.lib_base.ext.init
@@ -13,7 +12,7 @@ import com.example.lib_base.room.entity.CityEntity
 import com.example.lib_base.room.manager.CityManager
 import com.example.lib_main.R
 import com.example.lib_main.databinding.DialogSearchCityBinding
-import com.example.lib_main.model.CityDataModel
+import com.example.lib_base.model.CityDataModel
 import com.example.lib_main.ui.adapter.SearchCityAdapter
 import com.example.lib_main.utils.ReadJsonArrayUtils
 import kotlinx.coroutines.Dispatchers
@@ -74,7 +73,7 @@ class SearchCityDialog(context: Context, private val confirm: (CityDataModel) ->
                     //搜索列表
                     if (cityDataList.isNullOrEmpty()) return
                     val newList = cityDataList.filter {
-                        it.formattedAddress.contains(etSearch.text.toString().trim())
+                        it.cityName.contains(etSearch.text.toString().trim())
                     }
 
                     //已添加过的城市
@@ -85,7 +84,7 @@ class SearchCityDialog(context: Context, private val confirm: (CityDataModel) ->
                     }
                     // 遍历 newList，查找匹配项
                     for (i in newList.indices) {
-                        newList[i].isAdd = cityNameMap.containsKey(newList[i].formattedAddress)
+                        newList[i].isAdd = cityNameMap.containsKey(newList[i].cityName)
                     }
 
                     searchCityAdapter.submitList(newList)

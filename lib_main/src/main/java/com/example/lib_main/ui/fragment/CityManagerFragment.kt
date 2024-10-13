@@ -63,7 +63,7 @@ class CityManagerFragment : BaseFragment<CityManagerViewModel, FragmentCityManag
 
             addOnItemChildClickListener(R.id.ivDelete) { _, _, position ->
                 val data = getItem(position) ?: return@addOnItemChildClickListener
-                if (data.isMyLocation) return@addOnItemChildClickListener
+                if (data.isLocation) return@addOnItemChildClickListener
                 //删除城市
                 mViewModel.deleteCity(data.id)
             }
@@ -75,7 +75,7 @@ class CityManagerFragment : BaseFragment<CityManagerViewModel, FragmentCityManag
 
         mViewModel.cityList.observe(viewLifecycleOwner) {
             val newList: MutableList<CityEntity> = mutableListOf()
-            newList.add(CityEntity(cityName = "增加城市", isMyLocation = true))
+            newList.add(CityEntity(cityName = "增加城市", isLocation = true))
             newList.addAll(it)
 
             cityManagerAdapter.submitList(newList)

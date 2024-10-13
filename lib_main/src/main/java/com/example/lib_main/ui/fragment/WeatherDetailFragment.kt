@@ -28,6 +28,9 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
     //当前天气
     private var skycon = ""
 
+    //是否为定位天气
+    private var isLocation = false
+
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.vm = mViewModel
         mDatabind.click = ProxyClick()
@@ -38,8 +41,10 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
             val cityName = getString(CITY_NAME) ?: ""
             val lat = getString(LAT) ?: ""
             val lng = getString(LNG) ?: ""
-            mViewModel.getWeatherRealTime(cityName,lat, lng)
-            mViewModel.getWeatherDay(cityName,lat, lng)
+            isLocation = getBoolean(IS_LOCATION)
+
+            mViewModel.getWeatherRealTime(cityName, lat, lng)
+            mViewModel.getWeatherDay(cityName, lat, lng)
         }
     }
 
@@ -62,6 +67,14 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
 
     override fun createObserver() {
         super.createObserver()
+
+        //刷新定位天气
+        appViewModel.refreshLocationWeather.observeInFragment(this) {
+            if (isLocation) {
+                mViewModel.getWeatherRealTime(it.cityName, it.lat, it.lng)
+                mViewModel.getWeatherDay(it.cityName, it.lat, it.lng)
+            }
+        }
 
         //实时数据
         mViewModel.weatherRealTimeData.observe(viewLifecycleOwner) {
@@ -127,12 +140,19 @@ class WeatherDetailFragment : BaseFragment<WeatherDetailViewModel, FragmentWeath
         private const val CITY_NAME = "CITY_NAME"
         private const val LAT = "LAT"
         private const val LNG = "LNG"
-        fun newInstance(cityName: String, lat: String, lng: String): WeatherDetailFragment {
+        private const val IS_LOCATION = "IS_LOCATION"
+        fun newInstance(
+            cityName: String,
+            lat: String,
+            lng: String,
+            isLocation: Boolean
+        ): WeatherDetailFragment {
             return WeatherDetailFragment().apply {
                 this.arguments = Bundle().apply {
                     putString(CITY_NAME, cityName)
                     putString(LAT, lat)
                     putString(LNG, lng)
+                    putBoolean(IS_LOCATION, isLocation)
                 }
             }
         }

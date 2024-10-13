@@ -1,4 +1,4 @@
-package com.example.lib_main.model
+package com.example.lib_base.model
 
 
 /**
@@ -8,8 +8,7 @@ package com.example.lib_main.model
  */
 
 data class CityDataModel(
-    var adcode: String = "",
-    var formattedAddress: String = "",
+    var cityName: String = "",
     var lat: String = "",
     var lng: String = "",
     var isAdd: Boolean = false,
